@@ -1,6 +1,7 @@
 package app.dev.myapplication;
 
 import android.content.Intent;
+import android.util.Log;
 
 public class FinestWebViewBuilder {
     String url;
@@ -43,6 +44,7 @@ public class FinestWebViewBuilder {
 
     public void loadWebView() {
         if (LibApp.getContext() != null) {
+            Log.d("TTTT", "testttt.....");
             Intent intent = new Intent(LibApp.getContext(), WebActivity.class);
             intent.putExtra("url", url);
             intent.putExtra("isAccessGPS", isAccessGPS);
