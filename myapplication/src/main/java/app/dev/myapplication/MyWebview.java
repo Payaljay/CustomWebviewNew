@@ -216,14 +216,14 @@ public class MyWebview extends WebView {
         });
     }
 
-    private void requestPermission() {
+   /* private void requestPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Toast.makeText(mActivity.get(), "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
         } else {
             ActivityCompat.requestPermissions(mActivity.get(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_MULTIPLE_ID_PERMISSIONS);
         }
     }
-
+*/
     private void fileChoose() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mActivity.get().getPackageManager()) != null) {
