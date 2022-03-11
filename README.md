@@ -14,6 +14,19 @@
 
 #### Gradle Dependency (jcenter)
 
+Add it in your root build.gradle at the end of repositories:
+
+```java
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+ ```
+ 
+#### Gradle Dependency (jcenter)
+
 Easily reference the library in your Android projects using this dependency in your module's `build.gradle` file.
 
 ```java
