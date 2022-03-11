@@ -50,6 +50,9 @@ You have to add permission in your `AndroidManifest.xml`
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
+<application
+  android:requestLegacyExternalStorage="true">
 ```
 
 #### Basic WebView
