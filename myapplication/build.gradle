@@ -14,6 +14,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 
     buildTypes {
         release {
@@ -36,4 +40,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
 }

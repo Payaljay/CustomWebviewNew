@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
@@ -141,13 +142,17 @@ public class MyWebview extends WebView {
             this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
+        this.addJavascriptInterface(new WebViewJavaScriptInterface(mActivity.get()), "app");
+
         super.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // Log.d("TTT", "url..." + url);
                 if (mCustomWebViewClient != null) {
                     // if the user-specified handler asks to override the request
                     if (mCustomWebViewClient.shouldOverrideUrlLoading(view, url)) {
                         // cancel the original request
+                        //Log.d("TTT", "url..." + url);
                         return true;
                     }
                 }
@@ -157,6 +162,7 @@ public class MyWebview extends WebView {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                // Log.d("TTT", "url..." + url);
                 super.onPageFinished(view, url);
             }
 
@@ -216,14 +222,46 @@ public class MyWebview extends WebView {
         });
     }
 
-   /* private void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(mActivity.get(), "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(mActivity.get(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_MULTIPLE_ID_PERMISSIONS);
+    public class WebViewJavaScriptInterface {
+
+        private Context context;
+
+        /*
+         * Need a reference to the context in order to sent a post message
+         */
+        public WebViewJavaScriptInterface(Context context) {
+            this.context = context;
+        }
+
+        @JavascriptInterface
+        public void openLinkOnBrowser(String message) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(message));
+            mActivity.get().startActivity(browserIntent);
         }
     }
-*/
+
+    public void loadJavaScript(String javascript) {
+        this.evaluateJavascript(javascript, new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String s) {
+
+            }
+        });
+    }
+
+    public void addJavascript() {
+
+    }
+
+
+    /* private void requestPermission() {
+         if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+             Toast.makeText(mActivity.get(), "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+         } else {
+             ActivityCompat.requestPermissions(mActivity.get(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_MULTIPLE_ID_PERMISSIONS);
+         }
+     }
+ */
     private void fileChoose() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mActivity.get().getPackageManager()) != null) {
@@ -265,6 +303,7 @@ public class MyWebview extends WebView {
         mActivity.get().startActivityForResult(Intent.createChooser(chooserIntent, "Select images"), INPUT_FILE_REQUEST_CODE);
 
     }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     public void setGeolocationEnabled(final boolean enabled) {
